@@ -9,30 +9,36 @@ namespace GamePadHelper
         private Vector2 leftStickAxis = Vector2.zero;
         private Vector2 rightStickAxis = Vector2.zero;
 
-        protected override void Initialize()
+        protected override void OnInitialize()
         {
+            if (axisNames == null)
+            {
+                Debug.LogError("EMPTY AXIS NAME ASSET");
+                return;
+            }
+
             axisKeys = new List<string>()
             {
-                XInputAxisNames.LeftAnalogStickX,
-                XInputAxisNames.LeftAnalogStickY,
-                XInputAxisNames.RightAnalogStickX,
-                XInputAxisNames.RightAnalogStickY,
-                XInputAxisNames.DPadX,
-                XInputAxisNames.DPadY,
-                XInputAxisNames.LTrigger,
-                XInputAxisNames.RTrigger
+                axisNames.LeftAnalogStickX,
+                axisNames.LeftAnalogStickY,
+                axisNames.RightAnalogStickX,
+                axisNames.RightAnalogStickY,
+                axisNames.DPadX,
+                axisNames.DPadY,
+                axisNames.LTrigger,
+                axisNames.RTrigger
             };
 
             axisValueDict = new Dictionary<string, AxisValues>();
             foreach (var key in axisKeys)
                 axisValueDict[key] = new AxisValues(key);
 
-            axisValueDict[XInputAxisNames.LTrigger].SetThreshold(1);
-            axisValueDict[XInputAxisNames.RTrigger].SetThreshold(1);
-            axisValueDict[XInputAxisNames.LeftAnalogStickX].SetThreshold(1);
-            axisValueDict[XInputAxisNames.LeftAnalogStickY].SetThreshold(1);
-            axisValueDict[XInputAxisNames.RightAnalogStickX].SetThreshold(1);
-            axisValueDict[XInputAxisNames.RightAnalogStickY].SetThreshold(1);
+            axisValueDict[axisNames.LTrigger].SetThreshold(1);
+            axisValueDict[axisNames.RTrigger].SetThreshold(1);
+            axisValueDict[axisNames.LeftAnalogStickX].SetThreshold(1);
+            axisValueDict[axisNames.LeftAnalogStickY].SetThreshold(1);
+            axisValueDict[axisNames.RightAnalogStickX].SetThreshold(1);
+            axisValueDict[axisNames.RightAnalogStickY].SetThreshold(1);
         }
 
         protected override bool TryProcessAxisValue(GamePadKey key, KeyPhase phase)
@@ -44,62 +50,62 @@ namespace GamePadHelper
             switch (key)
             {
                 case GamePadKey.D_UP:
-                    axisName = XInputAxisNames.DPadY;
+                    axisName = axisNames.DPadY;
                     isPositiveValue = true;
                     break;
                 case GamePadKey.D_DOWN:
-                    axisName = XInputAxisNames.DPadY;
+                    axisName = axisNames.DPadY;
                     isPositiveValue = false;
                     break;
                 case GamePadKey.D_LEFT:
-                    axisName = XInputAxisNames.DPadX;
+                    axisName = axisNames.DPadX;
                     isPositiveValue = false;
                     break;
                 case GamePadKey.D_RIGHT:
-                    axisName = XInputAxisNames.DPadX;
+                    axisName = axisNames.DPadX;
                     isPositiveValue = true;
                     break;
 
                 case GamePadKey.LT:
-                    axisName = XInputAxisNames.LTrigger;
+                    axisName = axisNames.LTrigger;
                     isPositiveValue = true;
                     break;
                 case GamePadKey.RT:
-                    axisName = XInputAxisNames.RTrigger;
+                    axisName = axisNames.RTrigger;
                     isPositiveValue = true;
                     break;
 
                 case GamePadKey.ANALOG_L_UP:
-                    axisName = XInputAxisNames.LeftAnalogStickY;
+                    axisName = axisNames.LeftAnalogStickY;
                     isPositiveValue = true;
                     break;
                 case GamePadKey.ANALOG_L_DOWN:
-                    axisName = XInputAxisNames.LeftAnalogStickY;
+                    axisName = axisNames.LeftAnalogStickY;
                     isPositiveValue = false;
                     break;
                 case GamePadKey.ANALOG_L_LEFT:
-                    axisName = XInputAxisNames.LeftAnalogStickX;
+                    axisName = axisNames.LeftAnalogStickX;
                     isPositiveValue = false;
                     break;
                 case GamePadKey.ANALOG_L_RIGHT:
-                    axisName = XInputAxisNames.LeftAnalogStickX;
+                    axisName = axisNames.LeftAnalogStickX;
                     isPositiveValue = true;
                     break;
 
                 case GamePadKey.ANALOG_R_UP:
-                    axisName = XInputAxisNames.RightAnalogStickY;
+                    axisName = axisNames.RightAnalogStickY;
                     isPositiveValue = true;
                     break;
                 case GamePadKey.ANALOG_R_DOWN:
-                    axisName = XInputAxisNames.RightAnalogStickY;
+                    axisName = axisNames.RightAnalogStickY;
                     isPositiveValue = false;
                     break;
                 case GamePadKey.ANALOG_R_LEFT:
-                    axisName = XInputAxisNames.RightAnalogStickX;
+                    axisName = axisNames.RightAnalogStickX;
                     isPositiveValue = false;
                     break;
                 case GamePadKey.ANALOG_R_RIGHT:
-                    axisName = XInputAxisNames.RightAnalogStickX;
+                    axisName = axisNames.RightAnalogStickX;
                     isPositiveValue = true;
                     break;
             }
@@ -167,28 +173,16 @@ namespace GamePadHelper
 
         public override Vector2 GetLStickAxis()
         {
-            leftStickAxis.x = Input.GetAxis(XInputAxisNames.LeftAnalogStickX);
-            leftStickAxis.y = Input.GetAxis(XInputAxisNames.LeftAnalogStickY);
+            leftStickAxis.x = Input.GetAxis(axisNames.LeftAnalogStickX);
+            leftStickAxis.y = Input.GetAxis(axisNames.LeftAnalogStickY);
             return leftStickAxis;
         }
 
         public override Vector2 GetRStickAxis()
         {
-            rightStickAxis.x = Input.GetAxis(XInputAxisNames.RightAnalogStickX);
-            rightStickAxis.y = Input.GetAxis(XInputAxisNames.RightAnalogStickY);
+            rightStickAxis.x = Input.GetAxis(axisNames.RightAnalogStickX);
+            rightStickAxis.y = Input.GetAxis(axisNames.RightAnalogStickY);
             return rightStickAxis;
         }
-    }
-
-    public static class XInputAxisNames
-    {
-        public static string LeftAnalogStickX = "Analog Left X";
-        public static string LeftAnalogStickY = "Analog Left Y";
-        public static string RightAnalogStickX = "Analog Right X";
-        public static string RightAnalogStickY = "Analog Right Y";
-        public static string DPadX = "D Pad X";
-        public static string DPadY = "D Pad Y";
-        public static string LTrigger = "Left Trigger";
-        public static string RTrigger = "Right Trigger";
     }
 }

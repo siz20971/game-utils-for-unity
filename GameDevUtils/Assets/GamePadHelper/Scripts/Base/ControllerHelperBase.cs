@@ -5,15 +5,32 @@ namespace GamePadHelper
 {
     public abstract class ControllerHelperBase
     {
-        // TODO : Implement other Player's input
-        //protected int playerIndex { get; private set; }
-
         protected List<string> axisKeys;
         protected Dictionary<string, AxisValues> axisValueDict;
 
-        public ControllerHelperBase()
+        public AxisNameAsset axisNames { get; private set; }
+
+        public void Initialize(string axisAssetName)
         {
-            Initialize();
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            sb.Append("AxisNameObject/");
+            sb.Append(axisAssetName);
+
+            axisNames = Resources.Load<AxisNameAsset>(sb.ToString());
+            if (axisNames == null)
+            {
+                axisNames = new AxisNameAsset();
+                axisNames.LeftAnalogStickX = "Analog Left X";
+                axisNames.LeftAnalogStickY = "Analog Left Y";
+                axisNames.RightAnalogStickX = "Analog Right X";
+                axisNames.RightAnalogStickY = "Analog Right Y";
+                axisNames.DPadX = "D Pad X";
+                axisNames.DPadY = "D Pad Y";
+                axisNames.LTrigger = "Left Trigger";
+                axisNames.RTrigger = "Right Trigger";
+            }
+
+            OnInitialize();
         }
 
         #region ABSTRACT METHODS
@@ -21,7 +38,7 @@ namespace GamePadHelper
         /// axisKeys에 Axis Input들의 이름들 추가.
         /// axisValueDict 초기화.
         /// </summary>
-        protected abstract void Initialize();
+        protected abstract void OnInitialize();
 
         public abstract Vector2 GetLStickAxis();
         public abstract Vector2 GetRStickAxis();

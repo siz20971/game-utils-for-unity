@@ -6,6 +6,7 @@ using GamePadHelper;
 
 namespace GamePadHelper.Editor
 {
+    // TODO : 개선 필요. // 중복 체크 및 여러 플레이어 대응 , AxisNameAssets 파일들 로드해서 대응 가능하도록 하면 좋을것같음.
     public class XInputSetting : EditorWindow
     {
         public class XInputAxisNameSet
@@ -36,14 +37,14 @@ namespace GamePadHelper.Editor
                 switch (playerId)
                 {
                     case 1:
-                        LeftAnalogStickX    = XInputAxisNames.LeftAnalogStickX;
-                        LeftAnalogStickY    = XInputAxisNames.LeftAnalogStickY;
-                        RightAnalogStickX   = XInputAxisNames.RightAnalogStickX;
-                        RightAnalogStickY   = XInputAxisNames.RightAnalogStickY;
-                        DPadX               = XInputAxisNames.DPadX;
-                        DPadY               = XInputAxisNames.DPadY;
-                        LTrigger            = XInputAxisNames.LTrigger;
-                        RTrigger            = XInputAxisNames.RTrigger;
+                        LeftAnalogStickX    = DefaultAxisNames.LeftAnalogStickX;
+                        LeftAnalogStickY    = DefaultAxisNames.LeftAnalogStickY;
+                        RightAnalogStickX   = DefaultAxisNames.RightAnalogStickX;
+                        RightAnalogStickY   = DefaultAxisNames.RightAnalogStickY;
+                        DPadX               = DefaultAxisNames.DPadX;
+                        DPadY               = DefaultAxisNames.DPadY;
+                        LTrigger            = DefaultAxisNames.LTrigger;
+                        RTrigger            = DefaultAxisNames.RTrigger;
                         break;
                 }
             }

@@ -15,6 +15,7 @@ R Trigger : {3}";
         void Start ()
         {
             xinput = new XInputHelper();
+            xinput.Initialize("XInputAxisPlayer1");
         }
 	
 	    void Update () {
@@ -39,8 +40,8 @@ R Trigger : {3}";
                     axisValueFmt,
                     xinput.GetLStickAxis(),
                     xinput.GetRStickAxis(),
-                    Input.GetAxis(XInputAxisNames.LTrigger),
-                    Input.GetAxis(XInputAxisNames.RTrigger)));
+                    Input.GetAxis(xinput.axisNames.LTrigger),
+                    Input.GetAxis(xinput.axisNames.RTrigger)));
 
             foreach (GamePadKey key in (GamePadKey[])Enum.GetValues(typeof(GamePadKey)))
             {
