@@ -6,41 +6,6 @@ namespace GamePadHelper
     // REF : http://wiki.unity3d.com/index.php/Xbox360Controller
     public class XInputHelper : ControllerHelperBase
     {
-        private Vector2 leftStickAxis = Vector2.zero;
-        private Vector2 rightStickAxis = Vector2.zero;
-
-        protected override void OnInitialize()
-        {
-            if (axisNames == null)
-            {
-                Debug.LogError("EMPTY AXIS NAME ASSET");
-                return;
-            }
-
-            axisKeys = new List<string>()
-            {
-                axisNames.LeftAnalogStickX,
-                axisNames.LeftAnalogStickY,
-                axisNames.RightAnalogStickX,
-                axisNames.RightAnalogStickY,
-                axisNames.DPadX,
-                axisNames.DPadY,
-                axisNames.LTrigger,
-                axisNames.RTrigger
-            };
-
-            axisValueDict = new Dictionary<string, AxisValues>();
-            foreach (var key in axisKeys)
-                axisValueDict[key] = new AxisValues(key);
-
-            axisValueDict[axisNames.LTrigger].SetThreshold(1);
-            axisValueDict[axisNames.RTrigger].SetThreshold(1);
-            axisValueDict[axisNames.LeftAnalogStickX].SetThreshold(1);
-            axisValueDict[axisNames.LeftAnalogStickY].SetThreshold(1);
-            axisValueDict[axisNames.RightAnalogStickX].SetThreshold(1);
-            axisValueDict[axisNames.RightAnalogStickY].SetThreshold(1);
-        }
-
         protected override bool TryProcessAxisValue(GamePadKey key, KeyPhase phase)
         {
             string axisName = string.Empty;
@@ -169,20 +134,6 @@ namespace GamePadHelper
             }
 
             return KeyCode.None;
-        }
-
-        public override Vector2 GetLStickAxis()
-        {
-            leftStickAxis.x = Input.GetAxis(axisNames.LeftAnalogStickX);
-            leftStickAxis.y = Input.GetAxis(axisNames.LeftAnalogStickY);
-            return leftStickAxis;
-        }
-
-        public override Vector2 GetRStickAxis()
-        {
-            rightStickAxis.x = Input.GetAxis(axisNames.RightAnalogStickX);
-            rightStickAxis.y = Input.GetAxis(axisNames.RightAnalogStickY);
-            return rightStickAxis;
         }
     }
 }

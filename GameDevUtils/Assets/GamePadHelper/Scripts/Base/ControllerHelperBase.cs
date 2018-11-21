@@ -8,6 +8,12 @@ namespace GamePadHelper
         protected List<string> axisKeys;
         protected Dictionary<string, AxisValues> axisValueDict;
 
+        private Vector2 leftStickAxis   = Vector2.zero;
+        private Vector2 rightStickAxis  = Vector2.zero;
+
+        private Vector2 leftStickPrevAxis   = Vector2.zero;
+        private Vector2 rightStickPrevAxis  = Vector2.zero;
+
         public AxisNameAsset axisNames { get; private set; }
 
         public void Initialize(string axisAssetName)
@@ -30,19 +36,41 @@ namespace GamePadHelper
                 axisNames.RTrigger = "Right Trigger";
             }
 
-            OnInitialize();
+            axisKeys = new List<string>()
+            {
+                axisNames.LeftAnalogStickX,
+                axisNames.LeftAnalogStickY,
+                axisNames.RightAnalogStickX,
+                axisNames.RightAnalogStickY,
+                axisNames.DPadX,
+                axisNames.DPadY,
+                axisNames.LTrigger,
+                axisNames.RTrigger
+            };
+
+            axisValueDict = new Dictionary<string, AxisValues>();
+            foreach (var key in axisKeys)
+                axisValueDict[key] = new AxisValues(key);
+
+            axisValueDict[axisNames.LTrigger].SetThreshold(1);
+            axisValueDict[axisNames.RTrigger].SetThreshold(1);
+            axisValueDict[axisNames.LeftAnalogStickX].SetThreshold(1);
+            axisValueDict[axisNames.LeftAnalogStickY].SetThreshold(1);
+            axisValueDict[axisNames.RightAnalogStickX].SetThreshold(1);
+            axisValueDict[axisNames.RightAnalogStickY].SetThreshold(1);
+        }
+
+        public Vector2 GetLStickPrevAxis()
+        {
+            return leftStickPrevAxis;
+        }
+
+        public Vector2 GetRStickPrevAxis()
+        {
+            return rightStickPrevAxis;
         }
 
         #region ABSTRACT METHODS
-        /// <summary>
-        /// axisKeys에 Axis Input들의 이름들 추가.
-        /// axisValueDict 초기화.
-        /// </summary>
-        protected abstract void OnInitialize();
-
-        public abstract Vector2 GetLStickAxis();
-        public abstract Vector2 GetRStickAxis();
-        
         protected abstract KeyCode GetKeyCode(GamePadKey key);
         protected abstract bool TryProcessAxisValue(GamePadKey key, KeyPhase phase);
         #endregion
@@ -88,12 +116,23 @@ namespace GamePadHelper
 
             return KeyPhase.NONE;
         }
-        #endregion
 
         public void UpdateFrames(float deltaTime)
         {
             foreach (var key in axisKeys)
                 axisValueDict[key].UpdateValues();
+
+            // Axis Value Update
+            leftStickPrevAxis.x = axisValueDict[axisNames.LeftAnalogStickX].prevValue;
+            leftStickPrevAxis.y = axisValueDict[axisNames.LeftAnalogStickY].prevValue;
+            rightStickPrevAxis.x = axisValueDict[axisNames.RightAnalogStickX].prevValue;
+            rightStickPrevAxis.y = axisValueDict[axisNames.RightAnalogStickY].prevValue;
+
+            leftStickAxis.x = axisValueDict[axisNames.LeftAnalogStickX].curValue;
+            leftStickAxis.y = axisValueDict[axisNames.LeftAnalogStickY].curValue;
+            rightStickAxis.x = axisValueDict[axisNames.RightAnalogStickX].curValue;
+            rightStickAxis.y = axisValueDict[axisNames.RightAnalogStickY].curValue;
         }
+        #endregion
     }
 }

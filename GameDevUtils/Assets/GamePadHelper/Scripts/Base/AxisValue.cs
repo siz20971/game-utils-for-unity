@@ -5,8 +5,8 @@ namespace GamePadHelper
     public class AxisValues
     {
         private string axisName;
-        private float prevValue;
-        private float curValue;
+        public float prevValue { get; private set; }
+        public float curValue { get; private set; }
         private float threshold = 1f;
 
         public AxisValues(string axisName)
@@ -37,7 +37,7 @@ namespace GamePadHelper
 
         public bool Press(bool toPositive)
         {
-            return !IsActiveValue(prevValue, toPositive) 
+            return !IsActiveValue(prevValue, toPositive)
                 && IsActiveValue(curValue, toPositive);
         }
 
