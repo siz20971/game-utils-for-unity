@@ -60,6 +60,16 @@ namespace GamePadHelper
             axisValueDict[axisNames.RightAnalogStickY].SetThreshold(1);
         }
 
+        public Vector2 GetLStickAxis()
+        {
+            return leftStickAxis;
+        }
+
+        public Vector2 GetRStickAxis()
+        {
+            return rightStickAxis;
+        }
+
         public Vector2 GetLStickPrevAxis()
         {
             return leftStickPrevAxis;
