@@ -2,10 +2,10 @@
 {
     public enum KeyPhase
     {
-        NONE,
-        DOWN,
-        KEEP,
-        UP
+        PRESS,
+        PRESSED,
+        RELEASE,
+        NONE
     }
 
     public enum GamePadKey
@@ -28,10 +28,19 @@
         BACK,
         START,
 
+        // XBOX Controller
         X,
         Y,
         A,
         B,
+
+        // Dualshock
+        TOUCHPAD,
+
+        CIRCLE,
+        CROSS,
+        TRIANGLE,
+        SQUARE,
 
         // Virtual
 

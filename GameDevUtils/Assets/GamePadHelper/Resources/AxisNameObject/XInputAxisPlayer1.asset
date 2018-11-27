@@ -12,9 +12,16 @@ MonoBehaviour:
   m_Name: XInputAxisPlayer1
   m_EditorClassIdentifier: 
   LeftAnalogStickX: Analog Left X
+  LStickXThreshold: 1
   LeftAnalogStickY: Analog Left Y
+  LStickYThreshold: 1
   RightAnalogStickX: Analog Right X
+  RStickXThreshold: 1
   RightAnalogStickY: Analog Right Y
+  RStickYThreshold: 1
   DPadX: D Pad X
   DPadY: D Pad Y
-  Trigger: Trigger
+  LTrigger: Left Trigger
+  LTriggerThreshold: 1
+  RTrigger: Right Trigger
+  RTriggerThreshold: 1

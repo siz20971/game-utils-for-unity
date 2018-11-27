@@ -10,15 +10,14 @@ R Stick : {1}
 L Trigger : {2}
 R Trigger : {3}";
 
-        private XInputHelper xinput;
-
+        private GamePadBase xinput;
         void Start ()
         {
-            xinput = new XInputHelper();
+            xinput = new DS4Input();
             xinput.Initialize("XInputAxisPlayer1");
         }
-	
-	    void Update () {
+
+        void Update () {
             if (xinput == null)
                 return;
 
@@ -28,13 +27,20 @@ R Trigger : {3}";
             {
                 var phase = xinput.GetButtonPhase(key);
 
-                if (phase != KeyPhase.NONE && phase != KeyPhase.KEEP)
+                if (phase != KeyPhase.NONE && phase != KeyPhase.PRESSED)
                     Debug.LogFormat("Input Key:{0} Phase:{1}", key, phase);
             }
         }
 
         private void OnGUI()
         {
+            GUILayout.BeginHorizontal();
+            foreach (var joystickName in Input.GetJoystickNames())
+            {
+                GUILayout.Box(joystickName);
+            }
+            GUILayout.EndHorizontal();
+
             GUILayout.Box(
                 string.Format(
                     axisValueFmt,

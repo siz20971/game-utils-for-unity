@@ -7,6 +7,7 @@ namespace GamePadHelper
         private string axisName;
         public float prevValue { get; private set; }
         public float curValue { get; private set; }
+
         private float threshold = 1f;
 
         public AxisValues(string axisName)
